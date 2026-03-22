@@ -51,7 +51,9 @@
 }
 
 body {
-  margin: 0;
+  body {
+  padding-top: env(safe-area-inset-top);
+}
 }
 
 #root {
