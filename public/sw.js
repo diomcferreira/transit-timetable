@@ -1,17 +1,8 @@
-const CACHE_NAME = "boat-board-v1";
-const APP_SHELL = [
-  "/",
-  "/manifest.webmanifest",
-  "/icon-192.png",
-  "/icon-192-maskable.png",
-  "/icon-512.png",
-  "/icon-512-maskable.png",
-  "/favicon.svg"
-];
+const CACHE_NAME = "boat-board-v2";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
+    caches.open(CACHE_NAME).then((cache) => cache.add("/"))
   );
   self.skipWaiting();
 });
@@ -30,31 +21,22 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  const { request } = event;
+  if (event.request.method !== "GET") return;
 
-  if (request.method !== "GET") return;
+  // Only handle same-origin requests
+  if (!event.request.url.startsWith(self.location.origin)) return;
 
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) return cachedResponse;
+    fetch(event.request)
+      .then((response) => {
+        const responseClone = response.clone();
 
-      return fetch(request)
-        .then((networkResponse) => {
-          if (!networkResponse || networkResponse.status !== 200) {
-            return networkResponse;
-          }
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseClone);
+        });
 
-          const responseClone = networkResponse.clone();
-
-          if (request.url.startsWith(self.location.origin)) {
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseClone);
-            });
-          }
-
-          return networkResponse;
-        })
-        .catch(() => caches.match("/"));
-    })
+        return response;
+      })
+      .catch(() => caches.match(event.request).then((res) => res || caches.match("/")))
   );
 });
