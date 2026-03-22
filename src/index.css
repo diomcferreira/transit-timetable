@@ -51,10 +51,9 @@
 }
 
 body {
-  body {
   padding-top: calc(env(safe-area-inset-top) + 6px);
 }
-}
+
 
 #root {
   width: 1126px;
