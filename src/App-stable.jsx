@@ -227,19 +227,14 @@ function SplitFlapText({
 
   return (
     <div
-    style={{
-  height: "100dvh",
-  width: "100%",
-  background: pageBg,
-  color: "white",
-  fontFamily: "Arial, sans-serif",
-  paddingTop: `calc(env(safe-area-inset-top) + ${isMobile ? 8 : 0}px)`,
-  paddingRight: outerPadding,
-  paddingBottom: outerPadding,
-  paddingLeft: outerPadding,
-  boxSizing: "border-box",
-  overflow: "hidden",
-}}
+      style={{
+        display: "flex",
+        justifyContent,
+        alignItems: "center",
+        gap,
+        opacity: dimmed ? 0.72 : 1,
+        flexWrap: "nowrap",
+      }}
     >
       {chars.map((char, i) => {
         const isSeparator = char === ":" || char === "." || char === " ";
