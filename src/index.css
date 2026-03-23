@@ -51,7 +51,7 @@
 }
 
 body {
-  margin: 0;
+  padding-top: calc(env(safe-area-inset-top) + 6px);
 }
 
 
@@ -65,7 +65,6 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding-top: calc(env(safe-area-inset-top) + 6px);
 }
 
 h1,
