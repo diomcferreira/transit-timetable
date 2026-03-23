@@ -1003,7 +1003,9 @@ export default function App() {
         background: pageBg,
         color: "white",
         fontFamily: "Arial, sans-serif",
-        padding: outerPadding,
+        padding: isMobile
+    ? `calc(${outerPadding} + env(safe-area-inset-top)) ${outerPadding} ${outerPadding} ${outerPadding}`
+    : outerPadding,
         boxSizing: "border-box",
         overflow: "hidden",
       }}
