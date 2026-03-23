@@ -1013,7 +1013,7 @@ export default function App() {
       <div
         style={{
           width: "100%",
-          margin: "0 auto",
+          margin: isMobile ? "10px auto 0 auto" : "0 auto",
           border: "none",
           borderRadius: isMobile ? "14px" : "20px",
           overflow: "hidden",
